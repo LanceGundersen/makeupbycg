@@ -51,7 +51,7 @@ main{overflow-x:clip}
 
 /* hero */
 .hero{position:relative;height:100svh;min-height:620px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
-.hero-img{position:absolute;inset:-8% 0;background-size:cover;background-position:26% 6%;filter:contrast(1.08) saturate(1.05);transform:scale(1.15);animation:heroin 2.4s var(--ease) forwards;will-change:transform}
+.hero-img{position:absolute;inset:-8% 0;background-size:cover;background-position:50% 0%;filter:contrast(1.06) saturate(1.1);transform:scale(1.15);animation:heroin 2.4s var(--ease) forwards;will-change:transform}
 @keyframes heroin{to{transform:scale(1.02)}}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,8,.55) 0%,rgba(10,9,8,0) 30%,rgba(10,9,8,.15) 55%,rgba(10,9,8,.92) 100%)}
 .hero-copy{position:relative;padding:0 var(--pad);z-index:2}
@@ -63,6 +63,13 @@ main{overflow-x:clip}
 .mega .line:first-child span{animation-delay:.05s}
 .mega em{font-weight:400;text-transform:lowercase;color:var(--hot);font-size:.62em;letter-spacing:-.02em;margin-right:.08em}
 @keyframes rise{to{transform:none}}
+/* landscape screens: one line along the bottom so the eyes and lips stay clear */
+@media (min-width:800px) and (min-aspect-ratio:11/10){
+  .mega{display:flex;align-items:baseline;gap:.2em;font-size:clamp(56px,11.2vw,210px);line-height:.9;margin-left:-.03em}
+  .mega .line{padding:.04em 0 .08em}
+  .mega em{color:var(--ivory);font-size:.55em}
+  .hero-copy{padding-bottom:0}
+}
 @keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .hero-foot{position:relative;z-index:2;display:flex;gap:clamp(12px,3vw,40px);align-items:center;padding:clamp(14px,2vw,26px) var(--pad);font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-stretch:90%;border-top:1px solid rgba(242,236,226,.25);margin-top:clamp(8px,1.5vw,18px)}
 .hero-foot .scroll{margin-left:auto;display:flex;align-items:center;gap:12px}

@@ -67,5 +67,8 @@ To swap a photo, replace the file in `public/img/` keeping the name, or edit the
 `src` / `url(...)` in `index.html`. Hero and bleed panels want about 2000px
 wide; reel cards about 1500px tall-side. JPEG quality 74-78.
 
-`feathers.jpg` and `glitter.jpg` (the two "Elsewhere" panels) are Unsplash
-placeholders by Good Faces and IRIS AVI until those sites have their own art.
+`remix.jpg` (costume / set design, Aubrey Odom) and `tcp.jpg` (home decor,
+Jovan Vasiljevic) are Unsplash placeholders for the two "Elsewhere" panels.
+Replace them with real photos from Creative ReMix and The Creative Peacock.
+The hero is a crop of the FEMME Rebelle cover (`hero.jpg`, 2x upscaled from a
+1032px crop), so a higher-resolution original would sharpen it on large screens.
