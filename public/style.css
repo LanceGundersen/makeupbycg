@@ -150,13 +150,18 @@ main{overflow-x:clip}
 
 /* worlds */
 .worlds{position:relative;padding-top:clamp(40px,6vw,80px)}
-.worlds-eyebrow{padding:0 var(--pad)}
+.worlds-intro{padding:0 var(--pad) clamp(20px,3vw,40px);max-width:1800px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 40px}
+.worlds-intro .eyebrow{margin:0}
+.worlds-line{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2vw,30px);color:rgba(242,236,226,.8);max-width:34ch}
+.world-main{position:absolute;inset:0;display:flex;align-items:flex-end}
+.world-ig{position:absolute;top:clamp(70px,8vw,96px);right:var(--pad);z-index:4;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-stretch:90%;padding:9px 16px;border:1px solid rgba(242,236,226,.55);border-radius:99px;background:rgba(10,9,8,.35);backdrop-filter:blur(6px);transition:background .3s,color .3s,border-color .3s}
+.world-ig:hover{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
 .worlds-grid{display:flex;height:min(100svh,900px);min-height:560px;border-block:1px solid var(--ink)}
 .world{position:relative;flex:1;overflow:hidden;display:flex;align-items:flex-end;transition:flex .9s var(--ease)}
 .world+.world{border-left:1px solid var(--ink)}
 .world-img{position:absolute;inset:0;background-size:cover;background-position:center 20%;transform:scale(1.06);transition:transform 1.4s var(--ease),filter .6s;filter:grayscale(.85) brightness(.7)}
-.world::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,9,8,.9),rgba(10,9,8,.05) 60%)}
-.world-copy{position:relative;z-index:2;padding:var(--pad);padding-bottom:clamp(30px,5vw,70px)}
+.world::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;background:linear-gradient(0deg,rgba(10,9,8,.9),rgba(10,9,8,.05) 60%)}
+.world-copy{position:relative;z-index:3;padding:var(--pad);padding-bottom:clamp(30px,5vw,70px)}
 .tag{display:block;font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-stretch:90%;color:var(--ivory);opacity:.8;margin-bottom:14px}
 .world h3{font-family:var(--serif);font-weight:800;font-size:clamp(42px,6.4vw,112px);line-height:.88;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:22px}
 .world h3 em{text-transform:none;color:var(--hot);font-weight:500;display:block}
