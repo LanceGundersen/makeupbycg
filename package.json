@@ -1,0 +1,13 @@
+{
+  "name": "makeupbycg",
+  "private": true,
+  "version": "1.0.0",
+  "description": "makeupbycg.com — one-page site on Cloudflare Pages",
+  "scripts": {
+    "dev": "wrangler pages dev",
+    "deploy": "wrangler pages deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.2"
+  }
+}
