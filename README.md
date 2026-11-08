@@ -56,13 +56,16 @@ Default URL: `https://makeupbycg.pages.dev`.
 3. In the Pages project, add `makeupbycg.com` as a custom domain.
 4. Recreate any email DNS records (MX/SPF) before switching if mail uses them.
 
-## Swapping in real photos
+## Photos
 
-Replace the files in `public/img/` keeping the names (`lips`, `eye`, `dots`,
-`mono`, `feathers`, `glitter`), or edit the `url(...)` references in
-`index.html`. Keep the hero (`lips.jpg`) landscape at about 2200px wide and the
-rest portrait at about 1500px wide, JPEG quality 70-75.
+Portfolio images and the logo came from the previous makeupbycg.com site
+(hero, mask, gray, flowers, femme, sheet1-3, bts, artist, logo-light, mark).
+The logo was recolored for the dark background (black ink to ivory, pink kept).
+Underwater work and lessons are intentionally left out.
 
-## Credits (placeholder photography, Unsplash)
+To swap a photo, replace the file in `public/img/` keeping the name, or edit the
+`src` / `url(...)` in `index.html`. Hero and bleed panels want about 2000px
+wide; reel cards about 1500px tall-side. JPEG quality 74-78.
 
-Joey Nicotra, Good Faces (Samia / Marika), Lombe Kapaya, Sima Koocheki, IRIS AVI.
+`feathers.jpg` and `glitter.jpg` (the two "Elsewhere" panels) are Unsplash
+placeholders by Good Faces and IRIS AVI until those sites have their own art.

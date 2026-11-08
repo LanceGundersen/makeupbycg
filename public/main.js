@@ -61,11 +61,60 @@
     });
   }
 
+  /* ---- portfolio reel: pinned horizontal scroll on desktop, native swipe elsewhere ---- */
+  const reel = $('[data-reel]');
+  let reelMax = 0, reelPinned = false;
+  const track = reel && $('[data-track]', reel);
+  const countEl = reel && $('[data-count]', reel);
+  const cards = reel ? $$('.card', reel) : [];
+  const wide = matchMedia('(min-width:800px)');
+  function reelSetup() {
+    if (!reel) return;
+    reelPinned = wide.matches && !reduce;
+    reel.classList.toggle('pinned', reelPinned);
+    track.style.transform = '';
+    reel.style.height = '';
+    if (reelPinned) {
+      reelMax = Math.max(0, track.offsetWidth - innerWidth);
+      reel.style.height = (innerHeight + reelMax) + 'px';
+    }
+    reelUpdate();
+  }
+  function reelCount() {
+    if (!countEl) return;
+    const mid = innerWidth / 2;
+    let best = 0, bd = Infinity;
+    cards.forEach((c, i) => {
+      const r = c.getBoundingClientRect();
+      const d = Math.abs(r.left + r.width / 2 - mid);
+      if (d < bd) { bd = d; best = i; }
+    });
+    countEl.textContent = String(best + 1).padStart(2, '0');
+  }
+  function reelUpdate() {
+    if (!reel) return;
+    if (reelPinned) {
+      const r = reel.getBoundingClientRect();
+      const span = reel.offsetHeight - innerHeight;
+      const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+      track.style.transform = `translate3d(${(-p * reelMax).toFixed(1)}px,0,0)`;
+    }
+    reelCount();
+  }
+  if (reel) {
+    track.addEventListener('scroll', reelCount, { passive: true });
+    addEventListener('resize', reelSetup);
+    addEventListener('load', reelSetup);
+    wide.addEventListener?.('change', reelSetup);
+    if (document.fonts?.ready) document.fonts.ready.then(reelSetup);
+    reelSetup();
+  }
+
   let ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(() => { lightWords(); parallax(); ticking = false; });
+    requestAnimationFrame(() => { lightWords(); parallax(); reelUpdate(); ticking = false; });
   }
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
