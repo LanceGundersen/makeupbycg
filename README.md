@@ -23,15 +23,16 @@ npm run dev          # http://localhost:8788
 ```
 
 `.dev.vars` holds Cloudflare's public Turnstile *test* secret so the form
-verifies locally. Email sending needs the deployed `send_email` binding, so a
-local submit returns "Email is not configured yet." That is expected.
+verifies locally. Without `CF_API_TOKEN` and `CF_ACCOUNT_ID` the form returns
+"Email is not configured yet." That is expected.
 
 ## Deploy
 
 ```bash
 npx wrangler login
+export CLOUDFLARE_ACCOUNT_ID=<account id>
 npx wrangler pages project create makeupbycg --production-branch main
-npm run deploy -- --project-name makeupbycg
+npm run deploy -- --project-name makeupbycg --branch main
 ```
 
 Default URL: `https://makeupbycg.pages.dev`.
@@ -43,6 +44,10 @@ Default URL: `https://makeupbycg.pages.dev`.
    secret: `npx wrangler pages secret put TURNSTILE_SECRET --project-name makeupbycg`
 2. Onboard the domain for Email Sending and confirm the `from` address in
    `wrangler.jsonc` (`CONTACT_FROM`). `CONTACT_TO` is where inquiries land.
+3. Pages config has no `send_email` binding, so the function uses the Email
+   Sending REST API. Create an API token with email sending permission and set:
+   `npx wrangler pages secret put CF_API_TOKEN --project-name makeupbycg` and
+   `npx wrangler pages secret put CF_ACCOUNT_ID --project-name makeupbycg`.
 
 ### Moving the domain off Squarespace
 

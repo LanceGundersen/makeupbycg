@@ -47,7 +47,11 @@ export async function onRequestPost({ request, env }) {
   }).then(r => r.json()).catch(() => null);
   if (!verify?.success) return json({ error: 'Verification failed. Please try again.' }, 400);
 
-  if (!env.EMAIL) return json({ error: 'Email is not configured yet.' }, 503);
+  // Pages config has no send_email binding, so mail goes out through the
+  // Email Sending REST API with a scoped token (CF_API_TOKEN + CF_ACCOUNT_ID).
+  if (!env.EMAIL && !(env.CF_API_TOKEN && env.CF_ACCOUNT_ID)) {
+    return json({ error: 'Email is not configured yet.' }, 503);
+  }
 
   const to = env.CONTACT_TO || 'cg@makeupbycg.com';
   const from = env.CONTACT_FROM || 'inquiries@makeupbycg.com';
@@ -66,15 +70,30 @@ export async function onRequestPost({ request, env }) {
 <p>Project: ${esc(project)}<br>Date &amp; location: ${esc(when || '—')}</p>
 <p style="white-space:pre-wrap">${esc(message)}</p></div>`;
 
+  const subject = `New inquiry: ${project} (${name})`.replace(/[\r\n]+/g, ' ').slice(0, 150);
+
   try {
-    await env.EMAIL.send({
-      to,
-      from: { email: from, name: 'Makeup by CG website' },
-      replyTo: email,
-      subject: `New inquiry: ${project} (${name})`.replace(/[\r\n]+/g, ' ').slice(0, 150),
-      text,
-      html,
-    });
+    if (env.EMAIL) {
+      await env.EMAIL.send({ to, from: { email: from, name: 'Makeup by CG website' }, replyTo: email, subject, text, html });
+    } else {
+      const res = await fetch(
+        `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/email/sending/send`,
+        {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${env.CF_API_TOKEN}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to,
+            from: { address: from, name: 'Makeup by CG website' },
+            reply_to: email,
+            subject,
+            text,
+            html,
+          }),
+        },
+      );
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || out.success === false) throw new Error(JSON.stringify(out.errors || res.status));
+    }
   } catch (err) {
     console.error('email send failed', err?.message || err);
     return json({ error: 'Could not send right now.' }, 502);
